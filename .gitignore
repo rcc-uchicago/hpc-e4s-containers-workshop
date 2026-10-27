@@ -21,7 +21,7 @@
 !/instructor/rehearse.sh
 !/instructor/check_rehearsal.sh
 
-# slides/: generator, deck, PDF, and the two images the deck uses
+# slides/: generator, deck, PDF, and the images the deck uses
 /slides/*
 !/slides/build_deck.js
 !/slides/render.sh
@@ -34,6 +34,8 @@
 /slides/assets/*
 !/slides/assets/e4scl_diagram.png
 !/slides/assets/e4s_download_page.png
+!/slides/assets/rcc_logo_maroon.png
+!/slides/assets/rcc_logo_reverse.png
 
 # Outputs if someone runs the labs inside the repository
 *.sif

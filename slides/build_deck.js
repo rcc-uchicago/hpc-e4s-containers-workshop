@@ -50,6 +50,9 @@ async function icon(Comp, color = "FFFFFF", size = 256) {
 
 // ---------------------------------------------------------------- layouts
 const FOOT = "Containers for HPC with E4S  ·  RCC Midway3  ·  Oct 27, 2026";
+// RCC signature logos from github.com/rcc-uchicago/RCC-New-Logos (PNG/signature.horizontal.rgb.*)
+const LOGO_ASPECT = 3000 / 324;
+const LOGO_ALT = "The University of Chicago, Office of Research and National Laboratories, Research Computing Center";
 pres.defineSlideMaster({
   title: "TITLE",
   background: { color: HEX.dk2 },
@@ -57,6 +60,7 @@ pres.defineSlideMaster({
     { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.0, w: 11.7, h: 1.9, fontSize: 44, bold: true, color: C.background1, valign: "bottom", align: "left", margin: 0 }, text: "" } },
     { placeholder: { options: { name: "subtitle", type: "body", x: 0.8, y: 4.1, w: 11.7, h: 0.8, fontSize: 22, color: C.accent1, margin: 0 }, text: "" } },
     { placeholder: { options: { name: "details", type: "body", x: 0.8, y: 5.3, w: 11.7, h: 1.4, fontSize: 16, color: C.background2, margin: 0, valign: "top" }, text: "" } },
+    { image: { x: 0.8, y: 0.7, w: 5.2, h: 5.2 / LOGO_ASPECT, path: path.join(ASSETS, "rcc_logo_reverse.png"), altText: LOGO_ALT } },
   ],
 });
 pres.defineSlideMaster({
@@ -74,7 +78,8 @@ pres.defineSlideMaster({
   margin: [0.5, 0.6, 0.6, 0.6],
   objects: [
     { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.35, w: 12.1, h: 0.85, fontSize: 34, bold: true, color: C.text1, margin: 0, valign: "middle", align: "left" }, text: "" } },
-    { text: { text: FOOT, options: { x: 0.6, y: 7.05, w: 9, h: 0.3, fontSize: 10, color: C.accent5, margin: 0 } } },
+    { text: { text: FOOT, options: { x: 0.6, y: 7.05, w: 8.5, h: 0.3, fontSize: 10, color: C.accent5, margin: 0 } } },
+    { image: { x: 9.55, y: 7.2 - 1.225 / LOGO_ASPECT, w: 2.45, h: 2.45 / LOGO_ASPECT, path: path.join(ASSETS, "rcc_logo_maroon.png"), altText: LOGO_ALT } },
   ],
   slideNumber: { x: 12.2, y: 7.05, w: 0.5, h: 0.3, fontSize: 10, color: HEX.accent5, align: "right" },
 });

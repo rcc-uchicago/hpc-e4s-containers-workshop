@@ -10,6 +10,7 @@ These files come from other projects and keep their original terms.
 | `labs/part3-alc/hypre.yaml` | Adapted from e4s-cloud-examples `containers/e4s-alc-example/hypre-build-specs.yaml` | Used with permission of ParaTools, Inc. |
 | `labs/part2/lammps.sbatch`, `labs/part2/petsc/ex50.sbatch`, `labs/part3-alc/03_run_custom.sbatch` | Workflows adapted from the corresponding e4s-cloud-examples scripts | Used with permission of ParaTools, Inc. |
 | `slides/assets/e4scl_diagram.png` | e4s-cl architecture diagram from Sameer Shende's "E4S at NERSC" training slides (Aug 2022) | Used with permission of Sameer Shende |
+| `slides/assets/rcc_logo_maroon.png`, `slides/assets/rcc_logo_reverse.png` | RCC signature logos (`PNG/signature.horizontal.rgb.{maroon,reverse}.png`) from [rcc-uchicago/RCC-New-Logos](https://github.com/rcc-uchicago/RCC-New-Logos) | University of Chicago marks; not covered by this repository's licenses. Use follows University of Chicago brand guidelines |
 | `slides/assets/e4s_download_page.png` | Screenshot of e4s.io/container-download from Sameer Shende's "E4S 26.06 release" slides | Used with permission of Sameer Shende |
 
 Several slides adapt text and figures from Sameer Shende's E4S tutorial decks (E4S 26.06 and
