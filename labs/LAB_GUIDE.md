@@ -26,6 +26,15 @@ $ source /project/rcc/workshops/e4s/env.sh
 $ sinteractive -c 4 -t 2:00:00          # a compute node for the next two hours
 ```
 
+`env.sh` prints the Slurm account your jobs will be charged to (`Slurm : … account=…`).
+If it's not the account you want, or `sinteractive` says "Invalid membership" or
+"No sufficient SU allocations", set your PI account and source the file again:
+
+```bash
+$ export E4S_SLURM_ACCOUNT=pi-<yourpi>
+$ source /project/rcc/workshops/e4s/env.sh
+```
+
 `sinteractive` logs you into a compute node, which is a new shell, so set up the
 environment there again and copy the labs into your scratch space:
 

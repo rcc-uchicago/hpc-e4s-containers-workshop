@@ -13,6 +13,13 @@ E4S_SLURM_RESERVATION=${E4S_SLURM_RESERVATION:-}
 E4S_SLURM_PARTITION=${E4S_SLURM_PARTITION:-caslake}
 # ------------------------------------------------------------------------------
 
+# Midway3's submit filter rejects jobs that don't name an account, so when none is
+# set above, use the participant's Slurm default account (normally their PI account).
+# Override with:  export E4S_SLURM_ACCOUNT=pi-<yourpi>   before sourcing this file.
+if [ -z "$E4S_SLURM_ACCOUNT" ] && command -v sacctmgr >/dev/null 2>&1; then
+    E4S_SLURM_ACCOUNT=$(sacctmgr -nP show user "$USER" format=defaultaccount 2>/dev/null | head -1)
+fi
+
 # Where the workshop's images and tools live: the directory holding this file.
 export E4S_WORKSHOP=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
