@@ -21,7 +21,7 @@ Repository layout:
 
 ```
 abstract.txt                     workshop abstract
-slides/E4S_Workshop_RCC_2026-10-27.pptx   the deck (32 slides, speaker notes) + .pdf
+slides/E4S_Workshop_RCC_2026-10-27.pptx   the deck (33 slides, speaker notes) + .pdf
 slides/build_deck.js, render.sh  deck generator (pptxgenjs) and render script
 labs/                            what participants copy (LAB_GUIDE.md + part2, part3-*)
 shared/env.sh                    participant environment (installed as $E4S_WORKSHOP/env.sh)
@@ -31,6 +31,10 @@ images/                          not tracked: SIF files from fetch_images.sh (25
 
 ## 2. Timeline (120 min)
 
+One timing vocabulary in the deck: section kickers and agenda cards show each part's
+length (talk + hands-on); hands-on pills and the lab guide show the hands-on share.
+The elapsed times below are for pacing only and stay in the slide 2 speaker notes.
+
 | Elapsed | Segment | Slides | Notes |
 |---|---|---|---|
 | 0:00 | Welcome, setup | 1–4 | Everyone runs Part 0. Biggest risk: Slurm account (§4) |
@@ -39,10 +43,10 @@ images/                          not tracked: SIF files from fetch_images.sh (25
 | 0:30 | Part 2 lecture | 11–17 | Start the pull at slide 14 so it runs during the talk |
 | 0:40 | Hands-on 2 | 18 | 25 min: pull (2–4 min), inspect, LAMMPS, PETSc challenge |
 | 1:05 | Break | | 5 min |
-| 1:10 | Part 3a lecture + hands-on | 19–24 | Charts on slide 20 are real Midway3 numbers |
-| 1:35 | Part 3b lecture + hands-on | 25–28 | Build takes ~2 min once scheduled |
+| 1:10 | Part 3a lecture + hands-on | 19–24 | 25 min: ~10 talk + 15 hands-on. Charts on slide 20 are real Midway3 numbers |
+| 1:35 | Part 3b lecture + hands-on | 25–28 | 20 min: ~5 talk + 15 hands-on. Build takes ~2 min once scheduled |
 | (1:53) | Optional: layered E4S | 29 | 1–2 min, only if time allows; skip otherwise |
-| 1:55 | Wrap-up | 30–32 | |
+| 1:55 | Wrap-up and Q&A | 30–33 | Leave slide 33 (follow-up email format) up during questions; log cases in instructor/followup_tracker.csv |
 
 Concurrent load if 30 people attend: 30 × 4-core interactive sessions (~3 nodes), plus
 short 2-node jobs in Part 3. A reservation of ~6 caslake nodes covers it comfortably.

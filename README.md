@@ -9,7 +9,7 @@ existing image with **e4s-alc**. Abstract: [abstract.txt](abstract.txt).
 
 | You want | Open |
 |---|---|
-| The slides | [slides/E4S_Workshop_RCC_2026-10-27.pptx](slides/E4S_Workshop_RCC_2026-10-27.pptx) (32 slides, speaker notes on each) · [PDF](slides/E4S_Workshop_RCC_2026-10-27.pdf) |
+| The slides | [slides/E4S_Workshop_RCC_2026-10-27.pptx](slides/E4S_Workshop_RCC_2026-10-27.pptx) (33 slides, speaker notes on each) · [PDF](slides/E4S_Workshop_RCC_2026-10-27.pdf) |
 | The hands-on guide | [labs/LAB_GUIDE.md](labs/LAB_GUIDE.md) |
 | Setup, timing, and what broke during testing | [instructor/INSTRUCTOR_NOTES.md](instructor/INSTRUCTOR_NOTES.md) |
 

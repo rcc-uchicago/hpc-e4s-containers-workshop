@@ -204,10 +204,10 @@ async function applyThemeColors(file, theme) {
   // 2. Agenda
   s = content("Today: three parts, all hands-on", "Opening");
   const parts = [
-    ["0:10", "Part 1", "Containers on shared HPC systems", "Why Apptainer, not Docker; the rootless model", HEX.accent4, I.lock],
-    ["0:30", "Part 2", "Pull, inspect, run", "E4S images, what is inside, Slurm batch jobs", HEX.accent2, I.search],
-    ["1:10", "Part 3a", "Swap MPI at launch", "e4s-cl: container binary, host MPI, full speed", HEX.accent1, I.bolt],
-    ["1:35", "Part 3b", "Add software to an image", "e4s-alc: YAML → definition file → new image", HEX.accent3, I.plus],
+    ["20 min", "Part 1", "Containers on shared HPC systems", "Why Apptainer, not Docker; the rootless model", HEX.accent4, I.lock],
+    ["35 min", "Part 2", "Pull, inspect, run", "E4S images, what is inside, Slurm batch jobs", HEX.accent2, I.search],
+    ["25 min", "Part 3a", "Swap MPI at launch", "e4s-cl: container binary, host MPI, full speed", HEX.accent1, I.bolt],
+    ["20 min", "Part 3b", "Add software to an image", "e4s-alc: YAML → definition file → new image", HEX.accent3, I.plus],
   ];
   parts.forEach((p, i) => {
     const x = 0.6 + i * 3.08;
@@ -218,8 +218,12 @@ async function applyThemeColors(file, theme) {
     s.addText(p[2], { x: x + 0.3, y: 3.35, w: 2.4, h: 0.9, fontSize: 20, bold: true, color: C.text1, isTextBox: true, margin: 0, valign: "top" });
     s.addText(p[3], { x: x + 0.3, y: 4.3, w: 2.4, h: 1.0, fontSize: 15, color: C.text1, isTextBox: true, margin: 0, valign: "top" });
   });
-  s.addText("Out of scope: building images from source — see RCC's general container workshops.", { x: 0.6, y: 5.8, w: 12.1, h: 0.4, fontSize: 15, italic: true, color: C.accent5, isTextBox: true, margin: 0 });
-  s.addNotes("Timing (elapsed): 0:00 welcome & setup, 0:10 Part 1, 0:30 Part 2, ~1:05 short break, 1:10 Part 3a e4s-cl, 1:35 Part 3b e4s-alc, 1:55 wrap-up. Learning objectives: explain why Apptainer rather than Docker; pull and inspect E4S images; run containerized apps under Slurm; run a containerized MPI app with the host MPI via e4s-cl; customize an image with e4s-alc.");
+  s.addText("Out of scope: building images from source — see RCC's general container workshops.", { x: 0.6, y: 5.65, w: 12.1, h: 0.4, fontSize: 15, italic: true, color: C.accent5, isTextBox: true, margin: 0 });
+  s.addText([
+    { text: "Your own research problem? ", options: { bold: true, color: C.accent1 } },
+    { text: "Note it. Today we stay on the shared labs; afterwards email help@rcc.uchicago.edu with [E4S workshop] in the subject and I'll follow up.", options: { color: C.text1 } },
+  ], { x: 0.6, y: 6.1, w: 12.1, h: 0.55, fontSize: 15, isTextBox: true, margin: 0, valign: "top", objectName: "own-problem" });
+  s.addNotes("Set expectations now: \"Many of you came with a specific problem. Today we stay on the shared labs so everyone finishes; for your own case, email help@rcc.uchicago.edu with [E4S workshop] in the subject. That opens a ticket and I'll follow up this week.\" Timing (elapsed, for you): 0:00 welcome & setup, 0:10 Part 1, 0:30 Part 2, ~1:05 short break, 1:10 Part 3a e4s-cl, 1:35 Part 3b e4s-alc, 1:55 wrap-up. The cards show each part's length (talk + hands-on); the hands-on pills show the hands-on share: Part 1 10 of 20 min, Part 2 25 of 35, Part 3a 15 of 25, Part 3b 15 of 20. Learning objectives: explain why Apptainer rather than Docker; pull and inspect E4S images; run containerized apps under Slurm; run a containerized MPI app with the host MPI via e4s-cl; customize an image with e4s-alc.");
 
   // 3. Setup
   s = content("Before we start: a compute node and the labs", "Opening");
@@ -815,7 +819,37 @@ async function applyThemeColors(file, theme) {
     { text: "Portions of this workshop are adapted from E4S tutorials by Sameer Shende (University of Oregon / ParaTools, Inc.) and the ParaTools e4s-cloud-examples, used with permission.", options: { breakLine: true } },
     { text: "E4S is supported by DOE ASCR and the High Performance Software Foundation. Measurements: RCC Midway3, October 2026." },
   ], { placeholder: "details" });
-  s.addNotes("Credits slide. Leave up during Q&A.");
+  s.addNotes("Credits slide. Then advance to the last slide and leave it up during Q&A.");
+
+  // Q&A: how personal cases get followed up
+  s = content("Questions? Your own case after today", "Wrap-up");
+  terminal(s, [
+    "To:      help@rcc.uchicago.edu",
+    "Subject: [E4S workshop] <software>: <one-line problem>",
+    "",
+    "CNetID and PI account:",
+    "Software and version:",
+    "What you ran (command or sbatch script):",
+    "Full error text (copied, not a screenshot):",
+    "Image you used, if any:",
+  ], { x: 0.6, y: 1.5, w: 7.3, fontSize: 15, name: "followup-email" });
+  const fu = [
+    [I.file, HEX.accent4, "Becomes an RCC ticket", "Nothing gets lost, and other RCC staff can pick it up."],
+    [I.clock, HEX.accent2, "Follow-up this week", "Similar cases get one shared answer or a short clinic."],
+    [I.users, HEX.accent1, "Quick ones at the break", "If it takes under two minutes, ask me in person."],
+  ];
+  fu.forEach((f, i) => {
+    const y = 1.55 + i * 1.3;
+    iconCircle(s, f[0], 8.3, y, 0.75, f[1], "followup-" + i);
+    s.addText(f[2], { x: 9.25, y: y - 0.05, w: 3.45, h: 0.45, fontSize: 18, bold: true, color: C.text1, isTextBox: true, margin: 0, valign: "middle" });
+    s.addText(f[3], { x: 9.25, y: y + 0.4, w: 3.45, h: 0.75, fontSize: 15, color: C.text1, isTextBox: true, margin: 0, valign: "top" });
+  });
+  s.addText([
+    { text: "help@rcc.uchicago.edu", options: { bold: true, color: C.accent1 } },
+    { text: "   ·   subject: ", options: { color: C.text1 } },
+    { text: "[E4S workshop] …", options: { bold: true, color: C.accent1 } },
+  ], { x: 0.6, y: 5.55, w: 12.1, h: 0.7, fontSize: 28, isTextBox: true, margin: 0, valign: "middle", objectName: "followup-address" });
+  s.addNotes("Leave this up during Q&A. When someone raises their own problem: if a lab part covers it, say which; if it takes under two minutes, do it at the end; otherwise ask them to email help@ with [E4S workshop] and note their name in instructor/followup_tracker.csv. Afterwards: rt_cli.py list --queue general --subject \"E4S workshop\" pulls every case.");
 
   await pres.writeFile({ fileName: path.join(__dirname, OUT) });
   await fixRunParagraphProps(path.join(__dirname, OUT));

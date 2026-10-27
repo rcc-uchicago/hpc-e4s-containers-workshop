@@ -6,13 +6,13 @@ You will run software from **E4S 26.06**, a pre-built image with 685 Spack packa
 (LAMMPS, GROMACS, PETSc, hypre, Trilinos, SUNDIALS, …), under **Apptainer** and
 **Slurm**. Nothing gets installed on the cluster.
 
-| Part | Time | You will |
+| Part | Hands-on time | You will |
 |---|---|---|
 | 0 | 5 min | Log in, get a compute node, copy the labs |
-| 1 | 15 min | See what a container on a shared HPC system can and cannot do |
-| 2 | 30 min | Pull an E4S image, inspect what is inside, run LAMMPS as a batch job |
-| 3a | 20 min | Run an MPI program with the container's MPI, then with Midway3's MPI via **e4s-cl** |
-| 3b | 20 min | Add software to an existing image with **e4s-alc** and run it |
+| 1 | 10 min | See what a container on a shared HPC system can and cannot do |
+| 2 | 25 min | Pull an E4S image, inspect what is inside, run LAMMPS as a batch job |
+| 3a | 15 min | Run an MPI program with the container's MPI, then with Midway3's MPI via **e4s-cl** |
+| 3b | 15 min | Add software to an existing image with **e4s-alc** and run it |
 
 Commands you type are shown after a `$`. Lines without `$` are example output.
 
