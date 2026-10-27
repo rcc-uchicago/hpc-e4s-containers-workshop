@@ -1,0 +1,33 @@
+# e4s-plus-app.yaml - e4s-alc recipe that customizes the full E4S image itself:
+# add an OS package and bake your own application into it, compiled against the
+# image's hypre and MPICH.
+#
+# The base is 25 GB, so building this takes several minutes and needs ~80 GB of
+# node-local disk: the instructor builds it ahead of time (see INSTRUCTOR_NOTES.md).
+#
+#   e4s-alc create -f e4s-plus-app.yaml
+#   apptainer build --fakeroot e4s-plus-app.sif e4s-plus-app.def
+
+backend: singularity
+bootstrap: localimage
+image: @E4S_WORKSHOP@/images/e4s-cpu-x86_64-26.06.sif
+repull: False
+name: e4s-plus-app.def
+
+env-variables:
+  - APP_HOME=/opt/app
+
+add-files:                      # host file -> directory in the image
+  - hypre_test.c /opt/app/
+
+os-packages:
+  - htop
+
+post-system-stage-commands:
+  - . /spack/share/spack/setup-env.sh
+  - spack load mpich hypre
+  - H=$(spack location -i hypre)
+  - cd /opt/app && mpicc -O2 -o hypre_test hypre_test.c -DHYPRE_TIMING -I$H/include -L$H/lib -Wl,-rpath,$H/lib -lHYPRE -lm
+  - echo ". /spack/share/spack/setup-env.sh; export PATH=/opt/app:\$PATH" > /etc/profile.d/setup-env.sh
+
+spack: False                    # keep the image's own Spack (and its 600+ installed packages)

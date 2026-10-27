@@ -1,0 +1,12 @@
+# lo.def - LibreOffice (headless) + metric-compatible fonts, used by render.sh to
+# turn the .pptx into a PDF. Build once:  apptainer build --fakeroot lo.sif lo.def
+
+Bootstrap: docker
+From: ubuntu:24.04
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get install -y --no-install-recommends libreoffice-impress libreoffice-writer \
+        fonts-dejavu fonts-liberation fonts-crosextra-carlito fonts-crosextra-caladea poppler-utils
+    apt-get clean && rm -rf /var/lib/apt/lists/*

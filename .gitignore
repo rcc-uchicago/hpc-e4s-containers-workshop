@@ -1,0 +1,48 @@
+# Whitelist: track only the workshop materials. Everything else in this folder stays
+# local: container images, development and test runs, reference decks, and the
+# instructor's outreach and invite lists (they contain participant details).
+/*
+!/.gitignore
+!/README.md
+!/THIRD_PARTY.md
+!/LICENSE
+!/LICENSE-CC-BY-4.0.txt
+!/abstract.txt
+!/labs/
+!/shared/
+!/instructor/
+!/slides/
+
+# instructor/: scripts and notes only
+/instructor/*
+!/instructor/INSTRUCTOR_NOTES.md
+!/instructor/setup_shared.sh
+!/instructor/fetch_images.sh
+!/instructor/rehearse.sh
+!/instructor/check_rehearsal.sh
+
+# slides/: generator, deck, PDF, and the two images the deck uses
+/slides/*
+!/slides/build_deck.js
+!/slides/render.sh
+!/slides/package.json
+!/slides/package-lock.json
+!/slides/lo.def
+!/slides/E4S_Workshop_RCC_2026-10-27.pptx
+!/slides/E4S_Workshop_RCC_2026-10-27.pdf
+!/slides/assets/
+/slides/assets/*
+!/slides/assets/e4scl_diagram.png
+!/slides/assets/e4s_download_page.png
+
+# Outputs if someone runs the labs inside the repository
+*.sif
+node_modules/
+*-[0-9]*.out
+/labs/part3-alc/*.def
+/labs/part3-mpi/pingpong
+/labs/part3-mpi/hypre_test
+/labs/part3-alc/hypre_test.c
+/labs/part3-alc/hypre_test_custom
+/labs/part2/petsc/ex50
+/labs/part2/log.lammps

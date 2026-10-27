@@ -1,0 +1,27 @@
+# hypre.yaml - e4s-alc recipe: start from an existing image, add hypre from the
+# E4S binary cache, and write an Apptainer definition file.
+# Adapted from the E4S/ParaTools tutorial (github.com/ParaToolsInc/e4s-cloud-examples).
+#
+#   e4s-alc create -f hypre.yaml      ->  hypre.def
+
+######## Base group ########
+backend: singularity          # e4s-alc's name for the Apptainer/Singularity family
+bootstrap: localimage         # start from a SIF file on disk ...
+image: @E4S_WORKSHOP@/images/ecpe4s-ubuntu24.04.sif    # ... this one (Ubuntu 24.04 + Spack)
+repull: False
+name: hypre.def               # output file
+
+######## System group ########
+os-packages:                  # extra Ubuntu packages, on top of e4s-alc's defaults
+  - nano
+
+post-system-stage-commands:   # runs inside the image while it is being built
+  - . /spack/share/spack/setup-env.sh
+  - spack mirror add e4s-alc-example https://cache.e4s.io/e4s-alc-example-1
+  - spack buildcache keys --install --trust
+  - spack install hypre       # binaries from the cache: nothing is compiled
+  - spack clean -a
+  - echo ". /spack/share/spack/setup-env.sh; spack load hypre" > /etc/profile.d/setup-env.sh
+
+######## Spack group ########
+spack: False                  # the base image already has Spack

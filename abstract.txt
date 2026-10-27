@@ -1,0 +1,22 @@
+Containers for HPC: Pre-built Scientific Software with E4S
+Research Computing Center
+John Crerar Library - Kathleen A. Zar Room, Chicago, IL
+Tuesday, October 27, 3 PM - 5 PM
+
+Overview
+Learn to run pre-built Apptainer containers with E4S on HPC clusters using Slurm, MPI, and scientific software libraries.
+
+Scientific applications commonly depend on dozens of interdependent libraries, and installing those libraries correctly against a given compiler, MPI implementation, and GPU toolchain is a recurring cost for research groups. This hands-on workshop introduces Apptainer (formerly Singularity), the rootless container runtime used on shared High-Performance Computing (HPC) systems, and the Extreme-scale Scientific Software Stack (E4S), a community-maintained distribution of more than 140 co-tested HPC and AI libraries and tools delivered as pre-built images rather than as build instructions.
+
+This session complements RCC's general container workshops, which cover building and distributing your own images; here we work exclusively with images that are already built. Participants work directly with pre-built E4S images. The session is organized in three parts. The first part introduces containers on shared HPC systems and the rootless execution model. In the second part, we pull an E4S image, inspect the scientific libraries available inside it, and run an application as a batch job under Slurm. In the third part, we cover two E4S tools: ABI-compatible MPI substitution at launch, and adding packages to an existing image. Building images from source is out of scope for the two-hour format.
+
+Objectives:
+Participants will learn to:
+- Explain why Apptainer, rather than Docker, is used to run containers on shared HPC systems.
+- Pull and inspect E4S images to verify the scientific libraries available inside them.
+- Deploy containerized applications as batch jobs under Slurm.
+- Run a containerized MPI application with the host MPI substituted at launch using e4s-cl.
+- Customize an existing image with additional software using e4s-alc.
+
+Level: Beginner to Intermediate
+Duration: 2 hours
