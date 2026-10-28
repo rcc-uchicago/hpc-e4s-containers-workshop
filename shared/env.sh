@@ -6,18 +6,20 @@
 # Re-source it in every new shell (including your sinteractive session).
 
 # ---- Instructor settings ----------------------------------------------------
-# Slurm account / reservation / partition for workshop jobs. Leave a value empty
-# to use your own default. sbatch, srun, salloc and sinteractive all read these.
+# Slurm account / reservation / partition for workshop jobs. sbatch, srun, salloc
+# and sinteractive all read these. Leave the reservation empty if there is none.
 E4S_SLURM_ACCOUNT=${E4S_SLURM_ACCOUNT:-}
 E4S_SLURM_RESERVATION=${E4S_SLURM_RESERVATION:-}
 E4S_SLURM_PARTITION=${E4S_SLURM_PARTITION:-caslake}
 # ------------------------------------------------------------------------------
 
-# Midway3's submit filter rejects jobs that don't name an account, so when none is
-# set above, use the participant's Slurm default account (normally their PI account).
-# Override with:  export E4S_SLURM_ACCOUNT=pi-<yourpi>   before sourcing this file.
-if [ -z "$E4S_SLURM_ACCOUNT" ] && command -v sacctmgr >/dev/null 2>&1; then
-    E4S_SLURM_ACCOUNT=$(sacctmgr -nP show user "$USER" format=defaultaccount 2>/dev/null | head -1)
+# Midway3 has no usable default account: its submit filter rejects jobs that don't
+# name one. Participants set theirs before sourcing this file:
+#     export E4S_SLURM_ACCOUNT=pi-<yourpi>
+if [ -z "$E4S_SLURM_ACCOUNT" ] && [ -z "$SLURM_JOB_ID" ]; then
+    echo "WARNING: no Slurm account set, so sbatch and sinteractive will be rejected. Run:" >&2
+    echo "    export E4S_SLURM_ACCOUNT=pi-<yourpi>" >&2
+    echo "    source ${BASH_SOURCE[0]}" >&2
 fi
 
 # Where the workshop's images and tools live: the directory holding this file.
@@ -65,6 +67,6 @@ if [ -z "$E4S_QUIET" ]; then
     echo "  apptainer  : $(apptainer --version)"
     echo "  e4s-cl     : $(command -v e4s-cl)"
     echo "  e4s-alc    : $(command -v e4s-alc)"
-    echo "  Slurm      : partition=${SBATCH_PARTITION:-default} account=${SBATCH_ACCOUNT:-default}${SBATCH_RESERVATION:+ reservation=$SBATCH_RESERVATION}"
+    echo "  Slurm      : partition=${SBATCH_PARTITION:-default} account=${SBATCH_ACCOUNT:-NOT SET}${SBATCH_RESERVATION:+ reservation=$SBATCH_RESERVATION}"
 fi
 export E4S_QUIET=1

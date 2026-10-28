@@ -27,7 +27,7 @@ $ sinteractive -c 4 -t 2:00:00          # a compute node for the next two hours
 ```
 
 `env.sh` prints the Slurm account your jobs will be charged to (`Slurm : … account=…`).
-If it's not the account you want, or `sinteractive` says "Invalid membership" or
+If it says `NOT SET` or isn't the account you want, or `sinteractive` says "Invalid membership" or
 "No sufficient SU allocations", set your PI account and source the file again:
 
 ```bash
