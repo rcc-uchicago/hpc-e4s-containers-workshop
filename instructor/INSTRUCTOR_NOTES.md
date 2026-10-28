@@ -94,11 +94,21 @@ short 2-node jobs in Part 3. A reservation of ~6 caslake nodes covers it comfort
    `e4s-cl profile detect` cannot trace. `labs/part3-mpi/make_e4scl_profile.sh` builds the
    equivalent profile by hand from the library list Intel MPI actually loads (captured with
    `LD_DEBUG=libs`).
-8. **Launch e4s-cl with `mpirun`, not `srun`.** `e4s-cl launch srun --mpi=pmi2 ...` hangs in
-   Intel MPI startup (just before process pinning). `e4s-cl launch mpirun -np N -ppn M`
-   (Intel MPI hydra, bootstrap=slurm) works; so does `srun --mpi=pmi2 apptainer exec ...`
-   with the same host libraries bound by hand, so the issue is specific to e4s-cl's srun
-   path. Worth reporting upstream.
+8. **`srun` and MPI on Midway3.** Slurm 20.11.8 here has `MpiDefault = none` and only the
+   `pmi2` plugin (no PMIx), so an MPI launch with srun needs `--mpi=pmi2`, and Intel MPI
+   also needs `I_MPI_PMI_LIBRARY=/software/slurm-current-el8-x86_64/lib/libpmi2.so`. The
+   OpenMPI modules have no PMIx support, so launch them with `mpirun`. MPICH's `mpirun`
+   inside an `srun --pty` shell can hang because hydra calls srun again (`sinteractive`
+   connects over ssh, so workshop sessions aren't affected). With e4s-cl there is one more
+   condition: if `$I_MPI_ROOT/etc` (the tuning files) is not bound into the container,
+   `e4s-cl launch srun --mpi=pmi2 ...` hangs in Intel MPI startup right after
+   `File ".../etc/tuning_skx_shm-ofi.dat" not found`, even for 2 ranks on one node, while
+   `e4s-cl launch mpirun` (Intel MPI hydra) runs either way. `make_e4scl_profile.sh` binds
+   `etc`, and with it both launchers work: srun across 2 nodes gave 1.9 µs and 11.6 GB/s
+   (Oct 28). The labs use `mpirun`, the form in Sameer's slides. Run multi-node tests from
+   `/scratch/midway3` or `/project`: `/scratch/beagle3` is not mounted on every compute
+   node, and a rank whose node can't see the binary exits while the others wait in
+   `MPI_Init`, which looks like the same hang.
 9. **Host MPI choice.** Only `intelmpi/2021.5` uses InfiniBand between nodes in our tests;
    `mpich/5.0.0` (ch4:ofi) ran at TCP speed.
 10. **LAMMPS in the CUDA image needs `libcuda.so.1`** and fails on CPU-only nodes; use the
@@ -124,7 +134,7 @@ short 2-node jobs in Part 3. A reservation of ~6 caslake nodes covers it comfort
 | `sinteractive`/`sbatch` rejected | account/reservation (§4.1) |
 | `apptainer: command not found` in a batch job | the script must `source "$E4S_WORKSHOP/env.sh"`; check `echo $E4S_WORKSHOP` before `sbatch` |
 | pull slow or rate-limited | `cp /project/rcc/workshops/e4s/images/...` is not the same image, but they can run `./inspect.sh $E4S_IMAGE` and move on |
-| `02_e4s-cl` prints nothing for minutes | they used srun; check they did not edit the launcher. Verify `e4s-cl profile list` shows `midway3-impi` selected |
+| `02_e4s-cl` prints nothing for minutes | Intel MPI is stuck at startup (§4.8). Check that `e4s-cl profile list` shows `midway3-impi` selected and `e4s-cl profile show midway3-impi` lists `.../mpi/2021.5.0/etc` under Bound files; if not, rerun `./make_e4scl_profile.sh`. The job must run from `/scratch/midway3` or `/project` so both nodes see the binaries |
 | e4s-alc build slow/failed | `cp $E4S_WORKSHOP/images/prebuilt-ubuntu24.04_hypre.sif hypre.sif` (staged), then continue with `03_run_custom.sbatch` |
 
 ## 6. Optional demo: customizing the full 25 GB image

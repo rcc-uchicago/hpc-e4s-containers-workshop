@@ -622,7 +622,7 @@ async function applyThemeColors(file, theme) {
     ["Library list ", "= what Intel MPI loads on Midway3 (captured with LD_DEBUG): libmpi, libfabric + providers, verbs, mlx5, UCX, Slurm PMI"],
     ["Launch with mpirun ", "(Intel MPI's hydra). e4s-cl + srun --mpi=pmi2 hung at startup in our tests"],
   ], { x: 8.6, y: 1.6, w: 4.1, h: 4.9, fontSize: 15.5, gap: 14 });
-  s.addNotes("kernel.yama.ptrace_scope=3 on Midway3 login and compute nodes, so 'e4s-cl init' and 'e4s-cl profile detect' cannot trace. The hand-built profile is equivalent. Without e4s-cl, srun --mpi=pmi2 with the same libraries bound manually works too — the hang is specific to e4s-cl's srun path, so we use mpirun, which is also the form in Sameer's slides (e4s-cl mpirun -np 4 ./a.out).");
+  s.addNotes("kernel.yama.ptrace_scope=3 on Midway3 login and compute nodes, so 'e4s-cl init' and 'e4s-cl profile detect' cannot trace. The hand-built profile is equivalent, and it must include Intel MPI's etc directory (its tuning files): without it, 'e4s-cl launch srun --mpi=pmi2' hangs at Intel MPI startup, while mpirun runs either way. With it, srun works too. Midway3's Slurm has MpiDefault=none and only the pmi2 plugin, so srun needs --mpi=pmi2 and I_MPI_PMI_LIBRARY pointing at Slurm's libpmi2.so. We use mpirun, which is also the form in Sameer's slides (e4s-cl mpirun -np 4 ./a.out).");
 
   // 24. Hands-on 3a
   s = content("Hands-on 3a: same binary, two MPIs", "Part 3: e4s-cl and e4s-alc");
